@@ -5,7 +5,7 @@ openai==1.10
 pydantic
 
 ## formatting
-# black
+black
 
 ## example dependencies
 numpy
@@ -16,5 +16,6 @@ openmeteo_requests==1.2.0
 requests_cache==1.2.0
 retry_requests==2.0.0
 
+python-dotenv
 ## UI dependencies
 # streamlit
