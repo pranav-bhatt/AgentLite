@@ -1,0 +1,62 @@
+{
+    "/api/v2/workloadtypes": {
+        "get": {
+            "summary": "Return the workload types.",
+            "operationId": "ListWorkloadTypes",
+            "responses": {
+                "200": {
+                    "description": "A successful response.",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "workload_type": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                },
+                                "title": "list of workload types"
+                            }
+                        },
+                        "title": "Response object for workload type"
+                    }
+                },
+                "default": {
+                    "description": "An unexpected error response",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "error": {
+                                "type": "string"
+                            },
+                            "code": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "message": {
+                                "type": "string"
+                            },
+                            "details": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type_url": {
+                                            "type": "string"
+                                        },
+                                        "value": {
+                                            "type": "string",
+                                            "format": "byte"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "tags": [
+                "CMLService"
+            ]
+        }
+    }
+}

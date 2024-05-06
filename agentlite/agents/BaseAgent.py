@@ -49,6 +49,7 @@ class BaseAgent(ABCAgent):
         actions: List[BaseAction] = [],
         constraint: str = DEFAULT_PROMPT["constraint"],
         instruction: str = DEFAULT_PROMPT["agent_instruction"],
+        external_context: str = None,
         reasoning_type: str = "react",
         logger: AgentLogger = DefaultLogger,
         **kwargs
@@ -62,6 +63,7 @@ class BaseAgent(ABCAgent):
         self.task_pool = []
         self.constraint = constraint
         self.instruction = instruction
+        self.external_context = external_context
         self.reasoning_type = reasoning_type
         self.prompt_gen = BasePromptGen(
             agent_role=self.role,

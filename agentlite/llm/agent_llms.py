@@ -1,4 +1,4 @@
-from langchain.chains import LLMChain
+from langchain.chains.llm import LLMChain
 from langchain.prompts import PromptTemplate
 from openai import OpenAI
 
@@ -14,6 +14,8 @@ OPENAI_CHAT_MODELS = [
     "gpt-4-32k",
     "gpt-4-32k-0613",
     "gpt-4-1106-preview",
+    "llama3-instruct:latest",
+    "llama3-70b-8192",
 ]
 OPENAI_LLM_MODELS = ["text-davinci-003", "text-ada-001"]
 

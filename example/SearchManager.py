@@ -29,9 +29,9 @@ class SearchManager(ManagerAgent):
 def test_manager_agent():
     # setting the llm config of manager agent
     llm_config_dict = {
-        "llm_name": "gpt-3.5-turbo",
-        "temperature": 0.9,
-        "context_len": 4000,
+        "llm_name": "llama3-70b-8192",
+        "temperature": 0,
+        "context_len": 8192,
     }
     llm_config = LLMConfig(llm_config_dict)
     llm = get_llm_backend(llm_config)
@@ -72,7 +72,7 @@ def test_manager_agent():
     search_manager.add_example(task=exp_task_pack, action_chain=exp_act_obs)
 
     # run test
-    test_task = "what is micorsoft famous for"
+    test_task = "what is microsoft famous for"
     test_task_pack = TaskPackage(instruction=test_task, task_creator="User")
     response = search_manager(test_task_pack)
     print(response)

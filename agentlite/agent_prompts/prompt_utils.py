@@ -12,6 +12,10 @@ PROMPT_TOKENS = {
     "instruction": {"begin": "[Instruction]", "end": "[End of Instruction]"},
     "role": {"begin": "[Role]", "end": "[End of Role]"},
     "constraint": {"begin": "[Constraint]", "end": "[End of Constraint]"},
+    "external_context": {
+        "begin": "[External_Context]",
+        "end": "[End of External_Context]",
+    },
     "action": {"begin": "[Action_Doc]", "end": "[End of Action_Doc]"},
     "example": {"begin": "[Example]", "end": "[End of Example]"},
     "action_format": {
@@ -23,14 +27,14 @@ PROMPT_TOKENS = {
 }
 
 
-CONSTRAITS = {
-    "simple": "You generation should be simple and clear.",
+CONSTRAINTS = {
+    "simple": "Your generation should be simple and clear. Do not provide explanation for the actions. Don't use any information that you previously know, and only make use of the information provided in the user and system prompts.",
 }
 
 DEFAULT_PROMPT = {
-    "agent_instruction": f"""You are an intelligent agent. You should follow your {PROMPT_TOKENS["role"]['begin']}, {PROMPT_TOKENS["action"]['begin']} to take actions. Your generation should follow the example format. Finish the task as best as you can.""",
-    "manager_instruction": f"""You are a manager agent. You can assign a task to those agents in your team. Follow your {PROMPT_TOKENS["role"]['begin']}, {PROMPT_TOKENS["action"]['begin']}, {PROMPT_TOKENS["team"]['begin']} to take actions.""",
-    "constraint": f"""{CONSTRAITS["simple"]}""",
+    "agent_instruction": f"""You are an intelligent agent. You should follow your {PROMPT_TOKENS["role"]['begin']}, {PROMPT_TOKENS["action"]['begin']} and {PROMPT_TOKENS["constraint"]['begin']} to take actions, and {PROMPT_TOKENS["external_context"]['begin']} as one of the sources of information for making decisions. Your generation should follow the example format. Finish the task as best as you can.""",
+    "manager_instruction": f"""You are a manager agent. You can assign a task to those agents in your team. Follow your {PROMPT_TOKENS["role"]['begin']}, {PROMPT_TOKENS["action"]['begin']}, {PROMPT_TOKENS["team"]['begin']} and {PROMPT_TOKENS["constraint"]['begin']} to take actions, and {PROMPT_TOKENS["external_context"]['begin']} as one of the sources of information for making decisions..""",
+    "constraint": f"""{CONSTRAINTS["simple"]}""",
     "action_format": "Using the following action format example to generate well formatted actions.\n",
     "not_completed": "I cannot help with that. Please be more specific.",
 }

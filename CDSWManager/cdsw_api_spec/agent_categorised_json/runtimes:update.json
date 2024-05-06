@@ -1,0 +1,98 @@
+{
+    "/api/v2/runtimes:update": {
+        "post": {
+            "summary": "Update the status of selected runtimes",
+            "operationId": "UpdateRuntimeStatus",
+            "responses": {
+                "200": {
+                    "description": "A successful response.",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "rows_affected": {
+                                "type": "integer",
+                                "format": "int32",
+                                "title": "Number of runtimes updated"
+                            }
+                        },
+                        "description": "Response for updating runtimes."
+                    }
+                },
+                "default": {
+                    "description": "An unexpected error response",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "error": {
+                                "type": "string"
+                            },
+                            "code": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "message": {
+                                "type": "string"
+                            },
+                            "details": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type_url": {
+                                            "type": "string"
+                                        },
+                                        "value": {
+                                            "type": "string",
+                                            "format": "byte"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "body",
+                    "in": "body",
+                    "required": true,
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "status": {
+                                "title": "Status for selected runtimes",
+                                "type": "string",
+                                "enum": [
+                                    "ENABLED",
+                                    "DISABLED",
+                                    "DEPRECATED"
+                                ],
+                                "default": "ENABLED"
+                            },
+                            "runtime_id": {
+                                "type": "array",
+                                "items": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                },
+                                "description": "List of runtimes to update (not recommended)."
+                            },
+                            "image_identifier": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                },
+                                "description": "List of runtimes to update."
+                            }
+                        },
+                        "description": "Parameters to update selected runtimes."
+                    }
+                }
+            ],
+            "tags": [
+                "CMLService"
+            ]
+        }
+    }
+}

@@ -1,0 +1,488 @@
+{
+    "/api/v2/users/{user_id}": {
+        "get": {
+            "summary": "Lists user details for specified user id.",
+            "operationId": "GetShortUserByID",
+            "responses": {
+                "200": {
+                    "description": "A successful response.",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "username": {
+                                "type": "string",
+                                "description": "The username."
+                            },
+                            "name": {
+                                "type": "string",
+                                "description": "The user's full name."
+                            },
+                            "email": {
+                                "type": "string",
+                                "description": "The user's email address."
+                            }
+                        },
+                        "description": "Abbreviated user information."
+                    }
+                },
+                "default": {
+                    "description": "An unexpected error response",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "error": {
+                                "type": "string"
+                            },
+                            "code": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "message": {
+                                "type": "string"
+                            },
+                            "details": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type_url": {
+                                            "type": "string"
+                                        },
+                                        "value": {
+                                            "type": "string",
+                                            "format": "byte"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "user_id",
+                    "in": "path",
+                    "required": true,
+                    "type": "integer",
+                    "format": "int32"
+                }
+            ],
+            "tags": [
+                "CMLService"
+            ]
+        }
+    },
+    "/api/v2/users/{username}/v1_key:rotate": {
+        "post": {
+            "summary": "Rotate API V1 key",
+            "operationId": "RotateV1Key",
+            "responses": {
+                "200": {
+                    "description": "A successful response.",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "api_key": {
+                                "type": "string",
+                                "title": "New api_key"
+                            },
+                            "api_key_hash": {
+                                "type": "string",
+                                "title": "New api_key_hash"
+                            },
+                            "api_key_expiry_date": {
+                                "type": "string",
+                                "title": "New api_key_expiry_date"
+                            },
+                            "api_key_comments": {
+                                "type": "string",
+                                "title": "New api_key_comments"
+                            }
+                        }
+                    }
+                },
+                "default": {
+                    "description": "An unexpected error response",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "error": {
+                                "type": "string"
+                            },
+                            "code": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "message": {
+                                "type": "string"
+                            },
+                            "details": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type_url": {
+                                            "type": "string"
+                                        },
+                                        "value": {
+                                            "type": "string",
+                                            "format": "byte"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "username",
+                    "description": "username of the user whose V1 key you want to rotate",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "name": "body",
+                    "in": "body",
+                    "required": true,
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "username": {
+                                "type": "string",
+                                "title": "username of the user whose V1 key you want to rotate"
+                            },
+                            "api_key_expiry_date": {
+                                "type": "string",
+                                "title": "api_key_expiry_date - optional"
+                            },
+                            "api_key_comments": {
+                                "type": "string",
+                                "title": "api_key_comments - optional"
+                            }
+                        }
+                    }
+                }
+            ],
+            "tags": [
+                "CMLService"
+            ]
+        }
+    },
+    "/api/v2/users/{username}/v2_keys": {
+        "get": {
+            "summary": "Get all API V2 keys",
+            "operationId": "ListV2Keys",
+            "responses": {
+                "200": {
+                    "description": "A successful response.",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "keys": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "key_id": {
+                                            "type": "string",
+                                            "title": "New key_id"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "title": "New created_at"
+                                        },
+                                        "expiry_date": {
+                                            "type": "string",
+                                            "title": "New expiry_date"
+                                        },
+                                        "comments": {
+                                            "type": "string",
+                                            "title": "New comments"
+                                        }
+                                    },
+                                    "title": "single entry of V2 key that is stored in the DB"
+                                },
+                                "title": "individual key is same as that of the createV2KeyResponse\nall keys is just array of that response"
+                            }
+                        }
+                    }
+                },
+                "default": {
+                    "description": "An unexpected error response",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "error": {
+                                "type": "string"
+                            },
+                            "code": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "message": {
+                                "type": "string"
+                            },
+                            "details": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type_url": {
+                                            "type": "string"
+                                        },
+                                        "value": {
+                                            "type": "string",
+                                            "format": "byte"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "username",
+                    "description": "username of the user whose V2 keys you want to get",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "tags": [
+                "CMLService"
+            ]
+        },
+        "delete": {
+            "summary": "Delete all API V2 keys",
+            "operationId": "DeleteV2Keys",
+            "responses": {
+                "200": {
+                    "description": "A successful response.",
+                    "schema": {
+                        "type": "object",
+                        "description": "Response for deleting all V2 keys."
+                    }
+                },
+                "default": {
+                    "description": "An unexpected error response",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "error": {
+                                "type": "string"
+                            },
+                            "code": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "message": {
+                                "type": "string"
+                            },
+                            "details": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type_url": {
+                                            "type": "string"
+                                        },
+                                        "value": {
+                                            "type": "string",
+                                            "format": "byte"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "username",
+                    "description": "username of the user whose V2 keys you want to delete",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "tags": [
+                "CMLService"
+            ]
+        },
+        "post": {
+            "summary": "Create API V2 key",
+            "operationId": "CreateV2Key",
+            "responses": {
+                "200": {
+                    "description": "A successful response.",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "api_key": {
+                                "type": "string",
+                                "title": "New api_key"
+                            },
+                            "key_id": {
+                                "type": "string",
+                                "title": "New key_id"
+                            },
+                            "created_at": {
+                                "type": "string",
+                                "title": "New created_at"
+                            },
+                            "expiry_date": {
+                                "type": "string",
+                                "title": "New expiry_date"
+                            },
+                            "comments": {
+                                "type": "string",
+                                "title": "New comments"
+                            }
+                        }
+                    }
+                },
+                "default": {
+                    "description": "An unexpected error response",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "error": {
+                                "type": "string"
+                            },
+                            "code": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "message": {
+                                "type": "string"
+                            },
+                            "details": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type_url": {
+                                            "type": "string"
+                                        },
+                                        "value": {
+                                            "type": "string",
+                                            "format": "byte"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "username",
+                    "description": "username of the user whose V2 key you want to create",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "name": "body",
+                    "in": "body",
+                    "required": true,
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "username": {
+                                "type": "string",
+                                "title": "username of the user whose V2 key you want to create"
+                            },
+                            "expiry_date": {
+                                "type": "string",
+                                "title": "expiry_date - optional"
+                            },
+                            "comments": {
+                                "type": "string",
+                                "title": "comments - optional"
+                            }
+                        }
+                    }
+                }
+            ],
+            "tags": [
+                "CMLService"
+            ]
+        }
+    },
+    "/api/v2/users/{username}/v2_keys/{key_id}": {
+        "delete": {
+            "summary": "Delete an API V2 key",
+            "operationId": "DeleteV2Key",
+            "responses": {
+                "200": {
+                    "description": "A successful response.",
+                    "schema": {
+                        "type": "object",
+                        "description": "Response for deleting a V2 key."
+                    }
+                },
+                "default": {
+                    "description": "An unexpected error response",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "error": {
+                                "type": "string"
+                            },
+                            "code": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "message": {
+                                "type": "string"
+                            },
+                            "details": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type_url": {
+                                            "type": "string"
+                                        },
+                                        "value": {
+                                            "type": "string",
+                                            "format": "byte"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "username",
+                    "description": "username of the user whose V2 key you want to delete",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "name": "key_id",
+                    "description": "ID of the V2 key",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "tags": [
+                "CMLService"
+            ]
+        }
+    }
+}

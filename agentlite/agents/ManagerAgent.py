@@ -77,6 +77,8 @@ class ManagerAgent(BaseAgent):
         """
         if agent_name == agent.name:  # exact match
             return True
+        elif agent.name in agent_name:  # fuzzy match
+            return True
         # ## To-Do More fuzzy match
         return False
 
@@ -124,16 +126,17 @@ class ManagerAgent(BaseAgent):
         """
 
         action_name, args, PARSE_FLAG = parse_action(raw_action)
+        agent_act = AgentAct(name=action_name, params=args)
         # if action_name match a labor_agent
         if self.team:
             for agent in self.team:
                 if self.agent_match(action_name, agent):
-                    agent_act = AgentAct(name=action_name, params=args)
+                    agent_act = AgentAct(name=agent.name, params=args)
 
         # if action_name is action
         for action in self.actions:
             if act_match(action_name, action):
-                agent_act = AgentAct(name=action_name, params=args)
+                agent_act = AgentAct(name=action.action_name, params=args)
         return agent_act
 
     def forward(self, task: TaskPackage, agent_act: AgentAct) -> str:

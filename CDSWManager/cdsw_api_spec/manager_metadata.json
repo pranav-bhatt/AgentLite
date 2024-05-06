@@ -1,0 +1,256 @@
+{
+    "/api/v2/copilot/model/{copilot_model_id}": {
+        "get": "Get a Copilot model."
+    },
+    "/api/v2/copilot/models": {
+        "get": "List Copilot models, optionally filtered, sorted, and paginated.",
+        "post": "Create a Copilot model."
+    },
+    "/api/v2/copilot/models/{copilot_model.id}": {
+        "patch": "Update a Copilot model."
+    },
+    "/api/v2/copilot/models/{copilot_model_id}": {
+        "delete": "Delete a Copilot model."
+    },
+    "/api/v2/experiments": {
+        "get": "Lists all experiments that belong to a user across all projects."
+    },
+    "/api/v2/groupsquota": {
+        "get": "Return all the groups and its quotas based on the context. Admin gets all the groups details."
+    },
+    "/api/v2/jobs": {
+        "get": "Returns all jobs a user has access to."
+    },
+    "/api/v2/models": {
+        "get": "List all models that belong to a user across all projects."
+    },
+    "/api/v2/newsfeeds/{category}": {
+        "get": "List the newsfeeds, optionally filtered, sorted, and paginated."
+    },
+    "/api/v2/nodelabels": {
+        "get": "List all Accelerator Node Label"
+    },
+    "/api/v2/nodelabels/config": {
+        "patch": "Update admin_config_max_per_workload in Node Labels"
+    },
+    "/api/v2/projectnames": {
+        "get": "Return all the project names the user has access to, optionally filtered, sorted, and paginated."
+    },
+    "/api/v2/projects": {
+        "get": "Return all projects, optionally filtered, sorted, and paginated.",
+        "post": "Create a new project."
+    },
+    "/api/v2/projects/batch": {
+        "get": "Return a list of projects given a list of project IDs. This method will only return\nprojects that the calling user has access to, and can be used in situations where\ninformation about a subset of projects (like project names) is needed."
+    },
+    "/api/v2/projects/{experiment.project_id}/experiments/{experiment.id}": {
+        "patch": "Update an existing experiment."
+    },
+    "/api/v2/projects/{project.id}": {
+        "patch": "Update an existing project."
+    },
+    "/api/v2/projects/{project_id}": {
+        "get": "Return one project.",
+        "delete": "Delete a project."
+    },
+    "/api/v2/projects/{project_id}/applications": {
+        "get": "List applications, optionally filtered, sorted, and paginated.",
+        "post": "Create an application and implicitly start it immediately."
+    },
+    "/api/v2/projects/{project_id}/applications/{application.id}": {
+        "patch": "Update an application"
+    },
+    "/api/v2/projects/{project_id}/applications/{application_id}": {
+        "get": "Get an application.",
+        "delete": "Delete an application."
+    },
+    "/api/v2/projects/{project_id}/applications/{application_id}:restart": {
+        "post": "Start an application."
+    },
+    "/api/v2/projects/{project_id}/applications/{application_id}:stop": {
+        "post": "Stop an application."
+    },
+    "/api/v2/projects/{project_id}/collaborators": {
+        "get": "List project collaborators."
+    },
+    "/api/v2/projects/{project_id}/collaborators/{username}": {
+        "delete": "Delete a project collaborator",
+        "put": "Add a project collaborator"
+    },
+    "/api/v2/projects/{project_id}/experiments": {
+        "get": "List all experiments in a given project.",
+        "post": "Create an experiment."
+    },
+    "/api/v2/projects/{project_id}/experiments/{experiment_id}": {
+        "get": "Return one experiment.",
+        "delete": "Delete an experiment that belongs to an experiment id."
+    },
+    "/api/v2/projects/{project_id}/experiments/{experiment_id}/runs": {
+        "get": "Returns a list of Runs that belong to an experiment.",
+        "post": "Create a run for an experiment."
+    },
+    "/api/v2/projects/{project_id}/experiments/{experiment_id}/runs/{run.id}": {
+        "patch": "Update an experiment run."
+    },
+    "/api/v2/projects/{project_id}/experiments/{experiment_id}/runs/{run_id}": {
+        "get": "Get metadata, metrics, params, tags and artifacts for a run. In the case where multiple metrics\nwith the same key are logged for a run, return only the value with the latest timestamp.\nIf there are multiple values with the latest timestamp, return the maximum of these values.",
+        "delete": "Delete an experiment run."
+    },
+    "/api/v2/projects/{project_id}/experiments/{experiment_id}/runs/{run_id}/metrics/{metric_key}": {
+        "get": "Gets the all the recorded metrics for the key for a given run."
+    },
+    "/api/v2/projects/{project_id}/experiments/{experiment_id}/runs/{run_id}:deletebatch": {
+        "post": "Bulk delete an experiment run details like metrics, params, tags in one request."
+    },
+    "/api/v2/projects/{project_id}/experiments/{experiment_id}/runs/{run_id}:logbatch": {
+        "post": "Bulk update an experiment run details like metrics, params, tags in one request."
+    },
+    "/api/v2/projects/{project_id}/files/{path}": {
+        "get": "List files/subdirectories at a specified path",
+        "delete": "Delete a file or directory.",
+        "patch": "Update file metadata, such as renaming."
+    },
+    "/api/v2/projects/{project_id}/jobs": {
+        "get": "Returns all jobs, optionally filtered, sorted, and paginated.",
+        "post": "Create a new job."
+    },
+    "/api/v2/projects/{project_id}/jobs/{job.id}": {
+        "patch": "Updates a job."
+    },
+    "/api/v2/projects/{project_id}/jobs/{job_id}": {
+        "get": "Return one job.",
+        "delete": "Deletes a job."
+    },
+    "/api/v2/projects/{project_id}/jobs/{job_id}/runs": {
+        "get": "Lists job runs, optionally filtered, sorted, and paginated.",
+        "post": "Create and start a new job run for a job."
+    },
+    "/api/v2/projects/{project_id}/jobs/{job_id}/runs/{run_id}": {
+        "get": "Gets a job run."
+    },
+    "/api/v2/projects/{project_id}/jobs/{job_id}/runs/{run_id}:stop": {
+        "post": "Stops a job run. Encoded as a custom method."
+    },
+    "/api/v2/projects/{project_id}/machineusers": {
+        "get": "Lists All Machine-User Collaborators"
+    },
+    "/api/v2/projects/{project_id}/models": {
+        "get": "List models, optionally filtered, sorted, and paginated.",
+        "post": "Create a model."
+    },
+    "/api/v2/projects/{project_id}/models/{model.id}": {
+        "patch": "Update a model."
+    },
+    "/api/v2/projects/{project_id}/models/{model_id}": {
+        "get": "Get a model.",
+        "delete": "Delete a model."
+    },
+    "/api/v2/projects/{project_id}/models/{model_id}/builds": {
+        "get": "List model builds, optionally filtered, sorted, and paginated.",
+        "post": "Create a model build."
+    },
+    "/api/v2/projects/{project_id}/models/{model_id}/builds/{build_id}": {
+        "get": "Get a model build.",
+        "delete": "Delete a model build."
+    },
+    "/api/v2/projects/{project_id}/models/{model_id}/builds/{build_id}/deployments": {
+        "get": "List model deployments, optionally filtered, sorted, and paginated.",
+        "post": "Create a model deployment."
+    },
+    "/api/v2/projects/{project_id}/models/{model_id}/builds/{build_id}/deployments/{deployment_id}": {
+        "get": "Get a model deployment."
+    },
+    "/api/v2/projects/{project_id}/models/{model_id}/builds/{build_id}/deployments/{deployment_id}:restart": {
+        "post": "Restart a model deployment."
+    },
+    "/api/v2/projects/{project_id}/models/{model_id}/builds/{build_id}/deployments/{deployment_id}:stop": {
+        "post": "Stop a model deployment."
+    },
+    "/api/v2/registry/models": {
+        "get": "List registered models.",
+        "post": "Register a model.",
+        "patch": "Update a Registered model."
+    },
+    "/api/v2/registry/models/{model_id}": {
+        "get": "Get a registered model.",
+        "delete": "Unregister a model deletes a model.",
+        "patch": "Update a Registered model version."
+    },
+    "/api/v2/registry/models/{model_id}/versions/{version_id}": {
+        "get": "Get a registered model version",
+        "delete": "Unregister a model version."
+    },
+    "/api/v2/runtimeaddons": {
+        "get": "List the available runtime addons, optionally filtered, sorted, and paginated."
+    },
+    "/api/v2/runtimeaddons:updatestatus": {
+        "post": "Update runtime addons"
+    },
+    "/api/v2/runtimerepos": {
+        "get": "List Runtime repos.",
+        "post": "Create a  Runtime repo."
+    },
+    "/api/v2/runtimerepos/{runtime_repo_id}": {
+        "delete": "Delete a Runtime repo."
+    },
+    "/api/v2/runtimerepos/{runtimerepo.id}": {
+        "patch": "Update a Runtime repo."
+    },
+    "/api/v2/runtimes": {
+        "get": "List the available runtimes, optionally filtered, sorted, and paginated.",
+        "post": "Register a runtime, given the URL to the image in the docker registry"
+    },
+    "/api/v2/runtimes:update": {
+        "post": "Update the status of selected runtimes"
+    },
+    "/api/v2/runtimes:validate": {
+        "get": "Validate a runtime, given the URL to the image in the docker registry"
+    },
+    "/api/v2/site/config:update": {
+        "post": "Disable engines"
+    },
+    "/api/v2/site/teams": {
+        "post": "Create a team."
+    },
+    "/api/v2/teams/{team_name}": {
+        "delete": "Delete a team."
+    },
+    "/api/v2/ts_data": {
+        "get": "Return the time series data for the requested resource or property."
+    },
+    "/api/v2/usage": {
+        "get": "Return the new usage view based on the caller context, optionally filtered, sorted, and paginated."
+    },
+    "/api/v2/users/{user_id}": {
+        "get": "Lists user details for specified user id."
+    },
+    "/api/v2/users/{username}/v1_key:rotate": {
+        "post": "Rotate API V1 key"
+    },
+    "/api/v2/users/{username}/v2_keys": {
+        "get": "Get all API V2 keys",
+        "delete": "Delete all API V2 keys",
+        "post": "Create API V2 key"
+    },
+    "/api/v2/users/{username}/v2_keys/{key_id}": {
+        "delete": "Delete an API V2 key"
+    },
+    "/api/v2/usersquota": {
+        "get": "Return all the user names and quotas based on the context. Admin gets all the users details."
+    },
+    "/api/v2/workloadstatus": {
+        "get": "Return the workload statuses."
+    },
+    "/api/v2/workloadtypes": {
+        "get": "Return the workload types."
+    },
+    "/api/v2/projects/{project_id}/files": {
+        "post": "upload a file as a multi-part upload"
+    },
+    "/api/v2/projects/{project_id}/files/{path}:download": {
+        "post": "download a project file"
+    },
+    "/api/v2/runtimeaddons/custom": {
+        "post": "Create a new Custom Runtime Addon from an uploaded tarball"
+    }
+}

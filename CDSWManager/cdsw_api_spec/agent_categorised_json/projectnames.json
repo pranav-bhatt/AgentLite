@@ -1,0 +1,96 @@
+{
+    "/api/v2/projectnames": {
+        "get": {
+            "summary": "Return all the project names the user has access to, optionally filtered, sorted, and paginated.",
+            "operationId": "ListProjectNames",
+            "responses": {
+                "200": {
+                    "description": "A successful response.",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "project_names": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                },
+                                "title": "list of project names"
+                            },
+                            "next_page_token": {
+                                "type": "string",
+                                "description": "Next page token."
+                            }
+                        }
+                    }
+                },
+                "default": {
+                    "description": "An unexpected error response",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "error": {
+                                "type": "string"
+                            },
+                            "code": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "message": {
+                                "type": "string"
+                            },
+                            "details": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type_url": {
+                                            "type": "string"
+                                        },
+                                        "value": {
+                                            "type": "string",
+                                            "format": "byte"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "search_filter",
+                    "description": "Search filter is an optional HTTP parameter to filter results by.\nSupported search filter keys are: [name].\nFor example:\n  search_filter={\"name\":\"project name\"}.",
+                    "in": "query",
+                    "required": false,
+                    "type": "string"
+                },
+                {
+                    "name": "sort",
+                    "description": "Sort is an optional HTTP parameter to sort results by.\nSupported sort keys are: [name].\nwhere \"+\" means sort by ascending order, and \"-\" means sort by descending order.\nFor example:\n\tsort=name.",
+                    "in": "query",
+                    "required": false,
+                    "type": "string"
+                },
+                {
+                    "name": "page_size",
+                    "description": "page size of the response runtime repo list.",
+                    "in": "query",
+                    "required": false,
+                    "type": "integer",
+                    "format": "int32"
+                },
+                {
+                    "name": "page_token",
+                    "description": "page token for specifying which page to return.",
+                    "in": "query",
+                    "required": false,
+                    "type": "string"
+                }
+            ],
+            "tags": [
+                "CMLService"
+            ]
+        }
+    }
+}

@@ -1,0 +1,126 @@
+{
+    "/api/v2/newsfeeds/{category}": {
+        "get": {
+            "summary": "List the newsfeeds, optionally filtered, sorted, and paginated.",
+            "operationId": "ListNewsFeeds",
+            "responses": {
+                "200": {
+                    "description": "A successful response.",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "feeds": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "title": {
+                                            "type": "string"
+                                        },
+                                        "description": {
+                                            "type": "string"
+                                        },
+                                        "category": {
+                                            "type": "string"
+                                        },
+                                        "tags": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "link": {
+                                            "type": "string"
+                                        },
+                                        "imgpath": {
+                                            "type": "string"
+                                        },
+                                        "is_viewed": {
+                                            "type": "boolean",
+                                            "format": "boolean"
+                                        },
+                                        "date": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "description": "created at YYYY-MM-DDThh:mm:ss.uuZ format (ISO 8601 format)."
+                                        },
+                                        "icon": {
+                                            "type": "string"
+                                        },
+                                        "is_new": {
+                                            "type": "boolean",
+                                            "format": "boolean"
+                                        },
+                                        "description_html": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            },
+                            "next_page_token": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "default": {
+                    "description": "An unexpected error response",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "error": {
+                                "type": "string"
+                            },
+                            "code": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "message": {
+                                "type": "string"
+                            },
+                            "details": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type_url": {
+                                            "type": "string"
+                                        },
+                                        "value": {
+                                            "type": "string",
+                                            "format": "byte"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "category",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "name": "page_size",
+                    "in": "query",
+                    "required": false,
+                    "type": "integer",
+                    "format": "int32"
+                },
+                {
+                    "name": "page_token",
+                    "in": "query",
+                    "required": false,
+                    "type": "string"
+                }
+            ],
+            "tags": [
+                "CMLService"
+            ]
+        }
+    }
+}

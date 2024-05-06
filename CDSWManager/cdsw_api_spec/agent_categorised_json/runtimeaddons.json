@@ -1,0 +1,171 @@
+{
+    "/api/v2/runtimeaddons": {
+        "get": {
+            "summary": "List the available runtime addons, optionally filtered, sorted, and paginated.",
+            "operationId": "ListRuntimeAddons",
+            "responses": {
+                "200": {
+                    "description": "A successful response.",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "runtime_addons": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "identifier": {
+                                            "type": "string",
+                                            "description": "The unique identifier of the runtime addon."
+                                        },
+                                        "component": {
+                                            "type": "string",
+                                            "description": "The component this addon relates to, i.e. Spark."
+                                        },
+                                        "display_name": {
+                                            "type": "string",
+                                            "description": "The display name of the addon."
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The addon's status."
+                                        },
+                                        "manageable": {
+                                            "type": "boolean",
+                                            "format": "boolean",
+                                            "description": "Manageable addon."
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "description": "When the deployment was created."
+                                        },
+                                        "id": {
+                                            "type": "integer",
+                                            "format": "int32",
+                                            "description": "ID of the addon."
+                                        },
+                                        "reason": {
+                                            "type": "string",
+                                            "description": "Reason of not availability."
+                                        }
+                                    },
+                                    "description": "A single runtime addon."
+                                },
+                                "title": "The page of runtime addons;"
+                            },
+                            "next_page_token": {
+                                "type": "string",
+                                "description": "A token to fetch the next page of runtime addons."
+                            }
+                        },
+                        "description": "Response for listing runtime addons."
+                    }
+                },
+                "default": {
+                    "description": "An unexpected error response",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "error": {
+                                "type": "string"
+                            },
+                            "code": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "message": {
+                                "type": "string"
+                            },
+                            "details": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type_url": {
+                                            "type": "string"
+                                        },
+                                        "value": {
+                                            "type": "string",
+                                            "format": "byte"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "search_filter",
+                    "description": "Search filter is an optional HTTP parameter to filter results by.\nSupported search filter keys are: [\"identifier\", \"component\", \"display_name\", \"status\"].\nFor example:\n  search_filter = {\"component\": \"Spark\", \"status\": \"AVAILABLE\"},.",
+                    "in": "query",
+                    "required": false,
+                    "type": "string"
+                },
+                {
+                    "name": "page_size",
+                    "description": "Page size is an optional argument for number of entries to return in one page.\nIf not specified, the server will determine a page size.\nIf specified, must be respecified for further requests when using the\nprovided next page token in the response.",
+                    "in": "query",
+                    "required": false,
+                    "type": "integer",
+                    "format": "int32"
+                },
+                {
+                    "name": "page_token",
+                    "description": "Page token is an optional argument for specifying which page of results to get.\nIf not specified, the first page will be returned, including a token for the next page.\nWill be empty if there is no next page.",
+                    "in": "query",
+                    "required": false,
+                    "type": "string"
+                },
+                {
+                    "name": "sort",
+                    "description": "Sort is an optional HTTP parameter to sort results by.",
+                    "in": "query",
+                    "required": false,
+                    "type": "string"
+                }
+            ],
+            "tags": [
+                "CMLService"
+            ]
+        }
+    },
+    "/api/v2/runtimeaddons/custom": {
+        "post": {
+            "summary": "Create a new Custom Runtime Addon from an uploaded tarball",
+            "operationId": "HandleCustomRuntimeUpload",
+            "consumes": [
+                "multipart/form-data"
+            ],
+            "parameters": [
+                {
+                    "in": "formData",
+                    "name": "metadata",
+                    "type": "file",
+                    "required": true,
+                    "description": "Custom Runtime Addon metadata in JSON format."
+                },
+                {
+                    "in": "formData",
+                    "name": "tarball",
+                    "type": "file",
+                    "required": true,
+                    "description": "Tarball with the contents of the new Custom Runtime Addon"
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "A successful response."
+                },
+                "default": {
+                    "description": "An unexpected error response."
+                }
+            },
+            "tags": [
+                "CMLService"
+            ]
+        }
+    }
+}

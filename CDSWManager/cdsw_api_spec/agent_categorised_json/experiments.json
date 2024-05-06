@@ -1,0 +1,160 @@
+{
+    "/api/v2/experiments": {
+        "get": {
+            "summary": "Lists all experiments that belong to a user across all projects.",
+            "operationId": "ListAllExperiments",
+            "responses": {
+                "200": {
+                    "description": "A successful response.",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "experiments": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "description": "Unique identifier for the experiment."
+                                        },
+                                        "project_id": {
+                                            "type": "string",
+                                            "title": "Project ID"
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "description": "Human readable name that identifies the experiment."
+                                        },
+                                        "artifact_location": {
+                                            "type": "string",
+                                            "description": "Location where artifacts for the experiment are stored."
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "description": "Birth date in YYYY-MM-DDThh:mm:ss.uuZ format (ISO 8601 format).\nOutput only.",
+                                            "readOnly": true
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "description": "Last update in YYYY-MM-DDThh:mm:ss.uuZ format (ISO 8601 format).\nOutput only.",
+                                            "readOnly": true
+                                        },
+                                        "tags": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "key": {
+                                                        "type": "string",
+                                                        "description": "The tag key."
+                                                    },
+                                                    "value": {
+                                                        "type": "string",
+                                                        "description": "The tag value."
+                                                    }
+                                                },
+                                                "description": "Tag is used to add more metadata regarding an experiment/run."
+                                            },
+                                            "description": "Tags: Additional metadata key-value pairs."
+                                        },
+                                        "lifecycle_stage": {
+                                            "type": "string",
+                                            "description": "lifecycle_stage shows the status of experiment."
+                                        },
+                                        "user": {
+                                            "description": "User who creates the Experiment.",
+                                            "type": "object",
+                                            "properties": {
+                                                "username": {
+                                                    "type": "string",
+                                                    "description": "The username."
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "description": "The user's full name."
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "description": "The user's email address."
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "description": "Experiment is basically where a user can group and organize all the efforts\nthat goes into developing a machine learning model.\nExperiment names are unique across workspaces."
+                                }
+                            },
+                            "next_page_token": {
+                                "type": "string",
+                                "description": "Next page token is a value that can be added to a new ListJobs call to fetch\nthe next page of jobs, if any remain."
+                            }
+                        },
+                        "title": "ListExperimentsResponse containes array of experiment objects"
+                    }
+                },
+                "default": {
+                    "description": "An unexpected error response",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "error": {
+                                "type": "string"
+                            },
+                            "code": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "message": {
+                                "type": "string"
+                            },
+                            "details": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type_url": {
+                                            "type": "string"
+                                        },
+                                        "value": {
+                                            "type": "string",
+                                            "format": "byte"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "search_filter",
+                    "description": "Search filter is an optional HTTP parameter to filter results by.",
+                    "in": "query",
+                    "required": false,
+                    "type": "string"
+                },
+                {
+                    "name": "page_size",
+                    "description": "Page size is an optional argument for number of entries to return in one page.\nIf not specified, the server will determine a page size.\nIf specified, must be respecified for further requests when using the\nprovided next page token in the response.",
+                    "in": "query",
+                    "required": false,
+                    "type": "integer",
+                    "format": "int32"
+                },
+                {
+                    "name": "page_token",
+                    "description": "Page token is an optional argument for specifying which page of results to get.\nIf not specified, the first page will be returned, including a token for the next page.\nWill be empty if there is no next page.",
+                    "in": "query",
+                    "required": false,
+                    "type": "string"
+                }
+            ],
+            "tags": [
+                "CMLService"
+            ]
+        }
+    }
+}

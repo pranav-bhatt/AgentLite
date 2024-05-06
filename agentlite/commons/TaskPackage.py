@@ -13,6 +13,7 @@ class TaskPackage(BaseModel):
     executor: str = ""
     priority: int = 5
     task_id: str = str(uuid.uuid4())
+    external_context: str = ""
 
     def __str__(self):
         return f"""Task ID: {self.task_id}\nInstruction: {self.instruction}\nTask Creator: {self.creator}\nTask Completion:{self.completion}\nAnswer: {self.answer}\nTask Executor: {self.executor}"""

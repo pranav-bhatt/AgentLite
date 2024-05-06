@@ -18,6 +18,8 @@ def name_checking(name: str):
 def act_match(input_act_name: str, act: BaseAction):
     if input_act_name == act.action_name:  # exact match
         return True
+    elif act.action_name in input_act_name:  # fuzzy match
+        return True
     ## To-Do More fuzzy match
     return False
 
@@ -28,7 +30,8 @@ def parse_action(string: str) -> tuple[str, dict, bool]:
     """
 
     string = string.strip(" ").strip(".").strip(":").split("\n")[0]
-    pattern = r"^(\w+)\[(.+)\]$"
+    string = string.lstrip("Action:")
+    pattern = r"^(\w+)\[(.+)\]$"  # action_type[arguments]
     match = re.match(pattern, string)
     PARSE_FLAG = True
 

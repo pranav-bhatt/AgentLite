@@ -84,6 +84,12 @@ class BasePromptGen(PromptGen):
         else:
             return ""
 
+    def __external_context_prompt__(self, external_context):
+        if external_context and external_context != "":
+            return f"""{PROMPT_TOKENS["external_context"]['begin']}\n{external_context}\n{PROMPT_TOKENS["external_context"]['end']}"""
+        else:
+            return ""
+
     def __construct_history__(self, action_chain):
         history = action_chain_format(action_chain)
         return history
@@ -144,6 +150,8 @@ class BasePromptGen(PromptGen):
         prompt = f"""{self.instruction}\n{self.__role_prompt__(self.agent_role)}\n"""
         # adding constraint into prompt
         prompt += f"""{self.__constraint_prompt__()}\n"""
+        # adding external context into prompt
+        prompt += f"""{self.__external_context_prompt__(external_context=task.external_context)}\n"""
         # adding action doc into prompt
         prompt += (
             f"""{self.__act_doc_prompt__(actions=actions, params_doc_flag=True)}\n"""
@@ -222,6 +230,8 @@ class ManagerPromptGen(BasePromptGen):
         prompt = f"""{self.instruction}\n{self.__role_prompt__(self.agent_role)}\n"""
         # adding constraint into prompt
         prompt += f"""{self.__constraint_prompt__()}\n"""
+        # adding external context into prompt
+        prompt += f"""{self.__external_context_prompt__(external_context=task.external_context)}\n"""
         # adding team agent into prompt
         prompt += f"""{self.__team_prompt__(labor_agents_doc)}\n"""
         agent_call_example = format_agent_call_example(labor_agents_doc)
