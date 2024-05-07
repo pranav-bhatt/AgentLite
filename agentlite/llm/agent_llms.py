@@ -64,6 +64,7 @@ class LangchainLLM(BaseLLM):
             max_tokens=self.max_tokens,
             base_url=llm_config.base_url,
             api_key=llm_config.api_key,
+            max_retries=5,
         )
         human_template = "{prompt}"
         prompt = PromptTemplate(template=human_template, input_variables=["prompt"])
@@ -84,6 +85,7 @@ class LangchainChatModel(BaseLLM):
             max_tokens=self.max_tokens,
             base_url=llm_config.base_url,
             api_key=llm_config.api_key,
+            max_retries=5,
         )
         human_template = "{prompt}"
         prompt = PromptTemplate(template=human_template, input_variables=["prompt"])

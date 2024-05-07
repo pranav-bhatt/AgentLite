@@ -30,7 +30,6 @@ def parse_action(string: str) -> tuple[str, dict, bool]:
     """
 
     string = string.strip(" ").strip(".").strip(":").split("\n")[0]
-    string = string.lstrip("Action:")
     pattern = r"^(\w+)\[(.+)\]$"  # action_type[arguments]
     match = re.match(pattern, string)
     PARSE_FLAG = True

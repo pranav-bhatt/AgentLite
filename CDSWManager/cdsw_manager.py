@@ -1,13 +1,14 @@
-from typing import List, Optional
+from typing import List
 import json
+from dotenv import load_dotenv
 
-from cdsw_agents import CDSWProjectAgent, CDSWRuntimeAgent
+from cdsw_agents import CDSWProjectAgent
 
-from agentlite.actions import BaseAction, FinishAct, ThinkAct
+from agentlite.actions import FinishAct, ThinkAct
 from agentlite.actions.InnerActions import INNER_ACT_KEY
-from agentlite.agents import ABCAgent, BaseAgent, ManagerAgent
+from agentlite.agents import ABCAgent, ManagerAgent
 from agentlite.agents.agent_utils import AGENT_CALL_ARG_KEY
-from agentlite.commons import ActObsChainType, AgentAct, TaskPackage
+from agentlite.commons import AgentAct, TaskPackage
 from agentlite.llm.agent_llms import BaseLLM, get_llm_backend
 from agentlite.llm.LLMConfig import LLMConfig
 from agentlite.logging.terminal_logger import AgentLogger
@@ -38,16 +39,19 @@ def test_manager_agent():
     llm = get_llm_backend(llm_config)
 
     # setting the team of manager agent
-    cdsw_runtime_agent = CDSWRuntimeAgent(llm)
     cdsw_project_agent = CDSWProjectAgent(llm)
-    team = [cdsw_project_agent, cdsw_runtime_agent]
+    team = [cdsw_project_agent]
 
     # initialize the manager with llm and team labor agent
     search_manager = CDSWManager(llm, TeamAgents=team)
 
     # set the external context for the manager using the manager metadata
-    manager_external_context = text = json.dumps(
-        json.load(open("manager_metadata.json")),
+    manager_external_context = json.dumps(
+        json.load(
+            open(
+                "/Users/pranav.b/Desktop/Cloudera/tmp/AgentLite/CDSWManager/cdsw_api_spec/manager_metadata.json"
+            )
+        ),
         separators=(",", ":"),
     )
 
@@ -88,11 +92,12 @@ def test_manager_agent():
     search_manager.add_example(task=exp_task_pack, action_chain=exp_act_obs)
 
     # run test
-    test_task = "create a new job"
+    test_task = "create a new project"
     test_task_pack = TaskPackage(instruction=test_task, task_creator="User")
     response = search_manager(test_task_pack)
     print(response)
 
 
 if __name__ == "__main__":
+    load_dotenv(dotenv_path="../.env")
     test_manager_agent()

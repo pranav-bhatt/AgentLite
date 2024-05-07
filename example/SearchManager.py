@@ -72,7 +72,7 @@ def test_manager_agent():
     search_manager.add_example(task=exp_task_pack, action_chain=exp_act_obs)
 
     # run test
-    test_task = "what is microsoft famous for"
+    test_task = "what is cloudera famous for"
     test_task_pack = TaskPackage(instruction=test_task, task_creator="User")
     response = search_manager(test_task_pack)
     print(response)
