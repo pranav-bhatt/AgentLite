@@ -1,1 +1,1 @@
-{"/api/v2/workloadtypes":{"get":{"summary":"Return the workload types.","operationId":"ListWorkloadTypes","tags":["CMLService"]}}}
+{"/api/v2/workloadtypes":{"get":{"summary":"Return the workload types."}}}

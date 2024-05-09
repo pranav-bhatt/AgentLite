@@ -1,1 +1,1 @@
-{"/api/v2/workloadstatus":{"get":{"summary":"Return the workload statuses.","operationId":"ListWorkloadStatus","tags":["CMLService"]}}}
+{"/api/v2/workloadstatus":{"get":{"summary":"Return the workload statuses."}}}

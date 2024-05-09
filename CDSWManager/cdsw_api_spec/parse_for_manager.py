@@ -32,7 +32,15 @@ def swaggerSplitter():
     swagger = json.load(f)
     f.close()
 
-    useless_keys = ["type", "in", "readOnly", "format", "responses"]
+    useless_keys = [
+        "type",
+        "in",
+        "readOnly",
+        "format",
+        "responses",
+        "operationId",
+        "tags",
+    ]
     remove_useless_keys(swagger, useless_keys)
 
     sections = {}
