@@ -83,7 +83,7 @@ class CDSWClient:
         if response.ok:
             return response.json()
         else:
-            response.raise_for_status()
+            return response._content.decode("utf-8")
 
     def __call__(self, payload):
         return self.make_request(payload)
