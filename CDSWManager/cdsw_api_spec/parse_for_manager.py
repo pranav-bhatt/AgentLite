@@ -3,6 +3,10 @@ import pprint
 
 
 def remove_unecessary_keys(dictionary, useless_keys):
+    """
+    since the original swagger contains a ton of unnecessary metadata occupying
+    valuable character count, we remove those extra fields
+    """
     if isinstance(dictionary, dict):
         for key, value in list(dictionary.items()):
             if key in useless_keys:
@@ -14,23 +18,11 @@ def remove_unecessary_keys(dictionary, useless_keys):
             remove_unecessary_keys(item, useless_keys)
 
 
-def swaggerSplitter(threshold=2):
-    f = open("dereferenced_full_swagger.json")
-    swagger = json.load(f)
-    f.close()
-
-    useless_keys = [
-        "type",
-        "in",
-        "readOnly",
-        "format",
-        "responses",
-        "operationId",
-        "tags",
-    ]
-    remove_unecessary_keys(swagger, useless_keys)
-
-    metadata = {}
+def bucketer(swagger, threshold=2):
+    """
+    The following code buckets the paths in the swagger specification by path segment
+    in order to have small json files that can be easily consumed
+    """
     buckets = {}
     for path, methods in swagger["paths"].items():
         path_parts = path.split("/")
@@ -51,7 +43,29 @@ def swaggerSplitter(threshold=2):
             buckets[bucket_name] = {}
 
         buckets[bucket_name][path] = methods
+    return buckets
 
+
+def swaggerParser():
+    f = open("dereferenced_full_swagger.json")
+    swagger = json.load(f)
+    f.close()
+
+    useless_keys = [
+        "type",
+        "in",
+        "readOnly",
+        "format",
+        "responses",
+        "operationId",
+        "tags",
+    ]
+    remove_unecessary_keys(swagger, useless_keys)
+
+    buckets = bucketer(swagger)
+    metadata = {}
+
+    # we need a metadata file that will allow for direct mapping of paths to relevant json file
     for bucket_name, paths in buckets.items():
         # set the initial data for manager metadata along with where the files are being stored
         for path in paths:
@@ -68,8 +82,10 @@ def swaggerSplitter(threshold=2):
             open(f"agent_categorised_json/{bucket_name}.json", "w"),
             separators=(",", ":"),
         )
-    json.dump(metadata, open("manager_metadata.json", "w"), indent=4)
+
+    # create the manager metadata
+    json.dump(metadata, open("manager_metadata.json", "w"), separators=(",", ":"))
 
 
 if __name__ == "__main__":
-    swaggerSplitter()
+    swaggerParser()
