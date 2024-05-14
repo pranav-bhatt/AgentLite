@@ -52,11 +52,7 @@ class CDSWProjectAgent(BaseAgent):
         """
         # set the external context for the manager using the manager metadata
         agent_external_context = json.dumps(
-            json.load(
-                open(
-                    "/Users/pranav.b/Desktop/Cloudera/tmp/AgentLite/CDSWManager/cdsw_api_spec/poc_project_create.json"
-                )
-            ),
+            json.load(open("./cdsw_api_spec/poc_project_create.json")),
             separators=(",", ":"),
         )
 
@@ -124,47 +120,3 @@ class CDSWProjectAgent(BaseAgent):
             (act_6, obs_6),
         ]
         self.add_example(task=task_pack, action_chain=act_obs)
-
-
-# class CDSWRuntimeAgent(BaseAgent):
-#     def __init__(
-#         self,
-#         llm: BaseLLM,
-#         actions: List[BaseAction] = [DuckSearch()],
-#         manager: ABCAgent = None,
-#         **kwargs
-#     ):
-#         name = "duck_search_agent"
-#         role = "You can answer questions by using duck duck go search content."
-#         super().__init__(
-#             name=name,
-#             role=role,
-#             llm=llm,
-#             actions=actions,
-#             manager=manager,
-#             logger=agent_logger,
-#         )
-
-
-def test_search_agent():
-    llm_config_dict = {"llm_name": "gpt-3.5-turbo-16k-0613", "temperature": 0.1}
-    actions = [AskUser()]
-    llm_config = LLMConfig(llm_config_dict)
-    # print(llm_config.__dict__)
-    llm = get_llm_backend(llm_config)
-    # defining the agent
-    ## test simple no-example search agent with user provided name and default with wikipedia actions
-    # name = "search_agent"
-    # role = "searching online content"
-    # labor_agent = SearchAgent(name=name, role=role, llm=llm, actions=actions)
-    ## test the one-shot wikipedia search agent
-    labor_agent = CDSWProjectAgent(llm=llm)
-
-    test_task = "what is the found date of microsoft"
-    test_task_pack = TaskPackage(instruction=test_task)
-    response = labor_agent(test_task_pack)
-    print("response:", response)
-
-
-if __name__ == "__main__":
-    test_search_agent()

@@ -64,14 +64,19 @@ def test_manager_agent():
     act_1 = AgentAct(
         name=ThinkAct.action_name,
         params={
-            INNER_ACT_KEY: f"Based on the information I have and the descriptions of the team agents, I should ask {cdsw_project_agent.name} to handle this task.",
+            INNER_ACT_KEY: f"Based on the information I have and the descriptions of the team agents, \
+                I should ask {cdsw_project_agent.name} to handle this task. Based on the context I have, \
+                the file the agent has to refer to is 'projects.json' and the query to be sent to it \
+                is 'create a new project'",
         },
     )
     obs_1 = "OK"
 
     act_2 = AgentAct(
         name=cdsw_project_agent.name,
-        params={AGENT_CALL_ARG_KEY: "create a new project"},
+        params={
+            AGENT_CALL_ARG_KEY: "{'query': 'create a new project', 'file':'projects.json'}"
+        },
     )
     obs_2 = "Task completed successfully."
 
