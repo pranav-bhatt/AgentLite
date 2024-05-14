@@ -59,9 +59,7 @@ def swaggerParser():
     # remove unnecessary ref definitions
     del swagger["definitions"]
     f.close()
-    json.dump(swagger, open("dereferenced_full_swagger.json", "w"), indent=4)
 
-    return
     useless_keys = [
         "type",
         "in",
