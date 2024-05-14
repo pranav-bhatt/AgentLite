@@ -1,5 +1,5 @@
 import json
-import pprint
+import jsonref
 
 
 def remove_unecessary_keys(dictionary, useless_keys):
@@ -47,10 +47,21 @@ def bucketer(swagger, threshold=2):
 
 
 def swaggerParser():
-    f = open("dereferenced_full_swagger.json")
-    swagger = json.load(f)
-    f.close()
+    # import urllib.request
 
+    # CDSW_ENDPOINT = ""
+    # urllib.request.urlretrieve(
+    #     f"{CDSW_ENDPOINT}/api/v2/swagger.json", "original_swagger.json"
+    # )
+
+    f = open("original_swagger.json")
+    swagger = jsonref.load(f, lazy_load=False, proxies=False, merge_props=True)
+    # remove unnecessary ref definitions
+    del swagger["definitions"]
+    f.close()
+    json.dump(swagger, open("dereferenced_full_swagger.json", "w"), indent=4)
+
+    return
     useless_keys = [
         "type",
         "in",
