@@ -187,7 +187,9 @@ class ManagerAgent(BaseAgent):
         """
         instruction = ""
         external_context = ""
-        agent_categorised_json_root = "./cdsw_api_spec/agent_categorised_json/"
+        agent_categorised_json_root = (
+            "CMLAutonomousAgent/cdsw_api_spec/agent_categorised_json/"
+        )
 
         try:
             task_info = json.loads(task_ins)

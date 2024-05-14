@@ -32,7 +32,7 @@ def test_manager_agent():
     # setting the llm config of manager agent
     llm_config_dict = {
         "llm_name": "llama3-70b-8192",
-        "temperature": 0,
+        "temperature": 0.1,
         "context_len": 8192,
     }
     llm_config = LLMConfig(llm_config_dict)
@@ -47,16 +47,12 @@ def test_manager_agent():
 
     # set the external context for the manager using the manager metadata
     manager_external_context = json.dumps(
-        json.load(
-            open(
-                "/Users/pranav.b/Desktop/Cloudera/tmp/AgentLite/CDSWManager/cdsw_api_spec/manager_metadata.json"
-            )
-        ),
+        json.load(open("CMLAutonomousAgent/cdsw_api_spec/manager_metadata.json")),
         separators=(",", ":"),
     )
 
     # adding one example to manager agent
-    exp_task = "create a new project"
+    exp_task = "fetch me details for a project"
     exp_task_pack = TaskPackage(
         instruction=exp_task, external_context=manager_external_context
     )
@@ -64,10 +60,13 @@ def test_manager_agent():
     act_1 = AgentAct(
         name=ThinkAct.action_name,
         params={
-            INNER_ACT_KEY: f"Based on the information I have and the descriptions of the team agents, \
+            INNER_ACT_KEY: f"""Based on the information I have and the descriptions of the team agents, \
                 I should ask {cdsw_project_agent.name} to handle this task. Based on the context I have, \
-                the file the agent has to refer to is 'projects.json' and the query to be sent to it \
-                is 'create a new project'",
+                the GET call for the '/api/v2/projects/{{project_id}}' endpoint has to be invoked since its description \
+                which is 'Return one project.' matches the requested query 'fetch me details for a project'. The 'file' \
+                field from the metadata for '/api/v2/projects/{{project_id}}' tells me that the agent has to refer to \
+                'projects_{{project_id}}.json' and the query to be sent to it is the requested query 'fetch me details for a project'.\
+                I will not interpret any field as a parameters and will proceed without any replacements.""",
         },
     )
     obs_1 = "OK"
@@ -75,7 +74,7 @@ def test_manager_agent():
     act_2 = AgentAct(
         name=cdsw_project_agent.name,
         params={
-            AGENT_CALL_ARG_KEY: "{'query': 'create a new project', 'file':'projects.json'}"
+            AGENT_CALL_ARG_KEY: """{"query": "fetch me details for a project", "file":"projects_{project_id}.json"}"""
         },
     )
     obs_2 = "Task completed successfully."
@@ -98,7 +97,11 @@ def test_manager_agent():
 
     # run test
     test_task = input("Enter a task: ")
-    test_task_pack = TaskPackage(instruction=test_task, task_creator="User")
+    test_task_pack = TaskPackage(
+        instruction=test_task,
+        task_creator="User",
+        external_context=manager_external_context,
+    )
     response = search_manager(test_task_pack)
     print(response)
 

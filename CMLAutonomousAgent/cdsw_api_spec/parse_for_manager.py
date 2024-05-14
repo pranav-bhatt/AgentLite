@@ -26,6 +26,12 @@ def bucketer(swagger, threshold=2):
     buckets = {}
     for path, methods in swagger["paths"].items():
         path_parts = path.split("/")
+        path_parts = [
+            s.split(":", 1)[0].lstrip("{").rstrip("}")
+            + (":" + s.split(":", 1)[1] if ":" in s else "")
+            for s in path_parts
+        ]
+
         bucket_name = (
             "_".join(path_parts[3 : 3 + threshold])
             if len(path_parts) > 3

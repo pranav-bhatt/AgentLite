@@ -52,7 +52,7 @@ class CDSWProjectAgent(BaseAgent):
         """
         # set the external context for the manager using the manager metadata
         agent_external_context = json.dumps(
-            json.load(open("./cdsw_api_spec/poc_project_create.json")),
+            json.load(open("CMLAutonomousAgent/cdsw_api_spec/poc_project_create.json")),
             separators=(",", ":"),
         )
 
