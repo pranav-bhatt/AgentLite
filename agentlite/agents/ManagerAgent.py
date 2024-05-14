@@ -1,4 +1,5 @@
 from typing import List
+import json
 
 from agentlite.actions import FinishAct
 from agentlite.agent_prompts import ManagerPromptGen
@@ -184,7 +185,24 @@ class ManagerAgent(BaseAgent):
         :return: the task package
         :rtype: TaskPackage
         """
+        instruction = ""
+        external_context = ""
+        agent_categorised_json_root = "./cdsw_api_spec/agent_categorised_json/"
+
+        try:
+            task_info = json.loads(task_ins)
+            if "query" in task_info:
+                instruction = task_info["query"]
+            if "file" in task_info:
+                file_path = agent_categorised_json_root + task_info["file"]
+                external_context = json.load(open(file_path))
+        except ImportError:
+            instruction = task_ins
+
         task = TaskPackage(
-            instruction=task_ins, task_creator=self.id, task_executor=executor
+            instruction=instruction,
+            task_creator=self.id,
+            task_executor=executor,
+            external_context=external_context,
         )
         return task
